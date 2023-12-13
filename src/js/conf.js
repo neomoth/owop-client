@@ -121,7 +121,7 @@ export const options = propertyDefaults(userOptions, {
 		default: true,
 		title: 'Official server',
 		proto: 'old',
-		url: location.href.replace("http", "ws")
+		url: "wss://owop.neomoth.dev/ws/" //location.href.replace("http", "ws")
 	}], // The server address that websockets connect to
 	fallbackFps: 30, // Fps used if requestAnimationFrame is not supported
 	maxChatBuffer: 256, // How many chat messages to retain in the chatbox

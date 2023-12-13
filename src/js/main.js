@@ -1153,6 +1153,14 @@ window.addEventListener("error", e => {
 	}
 });
 
+window.addEventListener("message",(messageEvent)=>{
+	if(messageEvent.origin!=='https://neomoth.dev/'){
+		console.log('no');
+		return;
+	}
+	window.localStorage.setItem('nmdev-token', messageEvent.data.token);
+});
+
 window.addEventListener("load", () => {
 	elements.loadScr = document.getElementById("load-scr");
 	elements.loadUl = document.getElementById("load-ul");
