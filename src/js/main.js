@@ -188,9 +188,17 @@ function receiveMessage(text) {
 		nick.className = "nick";
 		var nickname = text.split(": ")[0];
 		var id = nickname.startsWith("[") ? nickname.split(" ")[0].slice(1, -1) : nickname;
+		let loggedin = false;
 		id = parseInt(id);
 		if (PublicAPI.muted.includes(id)) {
 			return;
+		}
+		if(id===0){
+			nick.className='userAccount';
+			console.log(nickname);
+			nickname = nickname.substring(4);
+			console.log(nickname);
+			loggedin=true;
 		}
 		nick.innerHTML = escapeHTML(nickname + ": ");
 		nick.addEventListener("click", function(event) {
@@ -203,7 +211,8 @@ function receiveMessage(text) {
 			event.stopPropagation();
 		});
 		message.appendChild(nick);
-		text = text.slice(nickname.length + 2);
+		if(!loggedin)text = text.slice(nickname.length + 2);
+		else text = text.slice(nickname.length+6);
 	}
 	var idIndex = text.indexOf(': '); /* This shouldn't be like this, change on proto switch */
 	if (idIndex !== -1) {
