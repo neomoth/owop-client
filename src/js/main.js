@@ -280,6 +280,7 @@ function receiveMessage(text) {
 }
 
 function receiveDevMessage(text) {
+	console.log(text);
 	let parsedJson = JSON.parse(text);
 	let parsedText = parsedJson.string;
     try {
