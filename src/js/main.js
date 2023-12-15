@@ -192,6 +192,10 @@ function receiveMessage(text) {
 		}
 		else if (parsedInfo.isLoggedIn) {
 			let nick = document.createElement("span");
+			let badge = document.createElement("span");
+			let badgeImage;
+			message.style.display='flex';
+			badge.style.display='flex';
 			let nickname = parsedText.split(": ")[0];
 			nick.innerHTML = escapeHTML(nickname + ": ");
 			nick.addEventListener("click", function(event) {
@@ -203,9 +207,18 @@ function receiveMessage(text) {
 				]);
 				event.stopPropagation();
 			});
+			if(parsedInfo.twitch) {
+				message.className='twitch';
+				nick.className = 'twitch';
+				badgeImage='https://cdn.neomoth.dev/r/iU6U6h.png';
+			}
+			else nick.className = 'userAccount';
+			if(badgeImage){
+				badge.innerHTML=`<img src='${badgeImage}' style='width:16px' alt='${nick.className}Badge'>`;
+				message.appendChild(badge);
+			}
 			message.appendChild(nick);
 			parsedText = parsedText.slice(nickname.length + 2);
-			nick.className = 'userAccount';
 		}
 	} else {
 		var nick = document.createElement("span");

@@ -500,6 +500,9 @@ button:focus {
 #chat-messages > li>.twitch{
 	color: #a970ff;
 }
+#chat-messages > li.twitch{
+	color: #bf6cde;
+}
 #chat-messages > li > .userAccount{
 	color: #2c994d;
 }
