@@ -190,8 +190,21 @@ function receiveMessage(text) {
 			message.className = "admin";
 			isAdmin = true;
 		}
-		else{
-			console.log('balls');
+		else {
+			let nick = document.createElement("span");
+			let nickname = parsedText.split(": ")[0];
+			nick.innerHTML = escapeHTML(nickname + ": ");
+			nick.addEventListener("click", function(event) {
+				createContextMenu(event.clientX, event.clientY, [
+					["Mute " + nickname, function() {
+						PublicAPI.muted.push(id);
+						receiveMessage("<span style=\"color: #ffa71f\">Muted " + id + "</span>");
+					}]
+				]);
+				event.stopPropagation();
+			});
+			message.appendChild(nick);
+			message.className = 'userAccount';
 		}
 	} else {
 		var nick = document.createElement("span");
