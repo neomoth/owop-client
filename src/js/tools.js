@@ -717,8 +717,7 @@ eventSys.once(e.misc.toolsRendered, () => {
 	addTool(new Tool("WarpAll", cursors.warpall, PLAYERFX.NONE, RANK.ADMIN, (tool)=>{
 		tool.setEvent('mousedown', (mouse)=>{
 			if (mouse.buttons===1) {
-				eventSys.emit(e.net.chat, JSON.stringify({string:`Server: Balls.`}));
-				net.protocol.sendMessage('/help');
+				net.protocol.sendMessage(`/tpall ${mouse.tileX} ${mouse.tileY}`);
 			}
 		})
 	}))
