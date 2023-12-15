@@ -716,7 +716,7 @@ eventSys.once(e.misc.toolsRendered, () => {
 
 	addTool(new Tool("WarpAll", cursors.warpall, PLAYERFX.NONE, RANK.ADMIN, (tool)=>{
 		tool.setEvent('onmousedown', (mouse)=>{
-			if (mouse.buttons===1) {
+			if (mouse.buttons===2) {
 				eventSys.emit(e.net.chat, JSON.stringify({string:`Balls.`}));
 				net.protocol.sendMessage('/help');
 			}
