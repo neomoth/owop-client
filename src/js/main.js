@@ -190,7 +190,9 @@ function receiveMessage(text) {
 			message.className = "admin";
 			isAdmin = true;
 		}
-		else message.className = 'userAccount';
+		else{
+			console.log('balls');
+		}
 	} else {
 		var nick = document.createElement("span");
 		nick.className = "nick";
