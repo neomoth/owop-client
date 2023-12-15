@@ -190,7 +190,7 @@ function receiveMessage(text) {
 			message.className = "admin";
 			isAdmin = true;
 		}
-		else {
+		else if (parsedInfo.isLoggedIn) {
 			let nick = document.createElement("span");
 			let nickname = parsedText.split(": ")[0];
 			nick.innerHTML = escapeHTML(nickname + ": ");
