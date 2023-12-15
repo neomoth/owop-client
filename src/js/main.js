@@ -189,7 +189,7 @@ function receiveMessage(text) {
 		let badge = document.createElement("span");
 		let badgeImages = [];
 		let hasColor;
-		message.style.display='flex';
+		message.style.display='inline-flex';
 		badge.style.display='flex';
 		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
 			message.className = "admin";
