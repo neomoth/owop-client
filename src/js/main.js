@@ -148,9 +148,9 @@ function receiveMessage(text) {
 	};
 
 	var message = document.createElement("li");
-	var realText = text;
 	let parsedText = text.string;
 	let parsedInfo = text.accountInfo;
+	var realText = parsedText;
 	var isAdmin = false;
 	// if (text.startsWith("[D]")) {
 	// 	message.className = "discord";
