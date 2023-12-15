@@ -164,14 +164,14 @@ function receiveMessage(text) {
 	// 	message.appendChild(nick);
 	// 	text = text.slice(nickname.length);
 	// } else
-	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname") || parsedText.startsWith("User: ")) {
+	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname") || parsedText.startsWith("Your nickname") || parsedText.startsWith("User: ")) {
 		message.className = "server";
 		if (parsedText.startsWith("Nickname set to")) {
 			let newNick = parsedText.slice(17);
 			if (newNick.length) {
 				misc.localStorage.nick = newNick;
 			}
-		} else if(parsedText==='Nickname reset.') {
+		} else if(parsedText==='Nickname reset.'||parsedText==='Your nickname was reset due to logging in.') {
 			delete misc.localStorage.nick;
 		}
 	} else if (parsedText.startsWith("->")) {
