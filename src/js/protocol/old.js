@@ -176,7 +176,7 @@ class OldProtocolImpl extends Protocol {
 				eventSys.emit(e.net.world.join, this.worldName);
 				eventSys.emit(e.net.world.setId, id);
 				eventSys.emit(e.net.playerCount, this.playercount);
-				eventSys.emit(e.net.chat, "[Server] Joined world: \"" + this.worldName + "\", your ID is: " + id + "!");
+				eventSys.emit(e.net.chat, JSON.stringify({string:"[Server] Joined world: \"" + this.worldName + "\", your ID is: " + id + "!"}));
 				break;
 
 			case oc.worldUpdate: // Get all cursors, tile updates, disconnects
