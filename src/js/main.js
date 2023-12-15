@@ -186,24 +186,27 @@ function receiveMessage(text) {
 	} else if (parsedText.startsWith("(M)")) {
 		message.className = "moderator";
 	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
-		message.className = "admin";
-		isAdmin = true;
+		if(parsedInfo.isAdmin) {
+			message.className = "admin";
+			isAdmin = true;
+		}
+		else message.className = 'userAccount';
 	} else {
 		var nick = document.createElement("span");
 		nick.className = "nick";
 		var nickname = parsedText.split(": ")[0];
 		var id = nickname.startsWith("[") ? nickname.split(" ")[0].slice(1, -1) : nickname;
-		let loggedin = false;
+		// let loggedin = false;
 		id = parseInt(id);
+		// if(id===0){
+		// 	nick.className='userAccount';
+		// 	console.log(nickname);
+		// 	nickname = nickname.substring(4);
+		// 	console.log(nickname);
+		// 	loggedin=true;
+		// }
 		if (PublicAPI.muted.includes(id)) {
 			return;
-		}
-		if(id===0){
-			nick.className='userAccount';
-			console.log(nickname);
-			nickname = nickname.substring(4);
-			console.log(nickname);
-			loggedin=true;
 		}
 		nick.innerHTML = escapeHTML(nickname + ": ");
 		nick.addEventListener("click", function(event) {
@@ -216,8 +219,9 @@ function receiveMessage(text) {
 			event.stopPropagation();
 		});
 		message.appendChild(nick);
-		if(!loggedin)parsedText = parsedText.slice(nickname.length + 2);
-		else parsedText = parsedText.slice(nickname.length+6);
+		// if(!loggedin)
+		parsedText = parsedText.slice(nickname.length + 2);
+		// else parsedText = parsedText.slice(nickname.length+6);
 	}
 	var idIndex = parsedText.indexOf(': '); /* This shouldn't be like this, change on proto switch */
 	if (idIndex !== -1) {
