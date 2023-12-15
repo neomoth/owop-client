@@ -154,6 +154,7 @@ function receiveMessage(text) {
 	console.log(parsedText);
 	var realText = parsedText;
 	var isAdmin = false;
+	var isMod = false;
 	// if (text.startsWith("[D]")) {
 	// 	message.className = "discord";
 	// 	var nick = document.createElement("span");
@@ -183,13 +184,12 @@ function receiveMessage(text) {
 		} else {
 			message.className = "tell";
 		}
-	} else if (parsedText.startsWith("(M)")) {
-		message.className = "moderator";
-	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
-		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
-			message.className = "admin";
-			isAdmin = true;
-		}
+	}
+	// else if (parsedInfo.moderator||parsedText.startsWith("(M)")) {
+	// 	message.className = "moderator";
+	// 	isMod = true;
+	// }
+	else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
 		else if (parsedInfo.isLoggedIn) {
 			let nick = document.createElement("span");
 			let badge = document.createElement("span");
@@ -207,7 +207,17 @@ function receiveMessage(text) {
 				]);
 				event.stopPropagation();
 			});
-			if(parsedInfo.twitch) {
+			if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
+				message.className = "admin";
+				badgeImage='https://cdn.neomoth.dev/r/GRrh41.png';
+				isAdmin = true;
+			}
+			else if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
+				message.className = "moderator";
+				badgeImage='https://cdn.neomoth.dev/r/v0yexJ.png';
+				// isAdmin = true;
+			}
+			else if(parsedInfo.twitch) {
 				message.className='twitch';
 				nick.className = 'twitch';
 				badgeImage='https://cdn.neomoth.dev/r/iU6U6h.png';
