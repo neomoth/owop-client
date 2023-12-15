@@ -184,16 +184,21 @@ function receiveMessage(text) {
 		} else {
 			message.className = "tell";
 		}
-	}
-	// else if (parsedInfo.moderator||parsedText.startsWith("(M)")) {
-	// 	message.className = "moderator";
-	// 	isMod = true;
-	// }
-	else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
+	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
+		let nick = document.createElement("span");
+		let badge = document.createElement("span");
+		let badgeImage;
+		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
+			message.className = "admin";
+			badgeImage='https://cdn.neomoth.dev/r/GRrh41.png';
+			isAdmin = true;
+		}
+		else if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
+			message.className = "moderator";
+			badgeImage='https://cdn.neomoth.dev/r/v0yexJ.png';
+			// isAdmin = true;
+		}
 		else if (parsedInfo.isLoggedIn) {
-			let nick = document.createElement("span");
-			let badge = document.createElement("span");
-			let badgeImage;
 			message.style.display='flex';
 			badge.style.display='flex';
 			let nickname = parsedText.split(": ")[0];
@@ -207,17 +212,7 @@ function receiveMessage(text) {
 				]);
 				event.stopPropagation();
 			});
-			if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
-				message.className = "admin";
-				badgeImage='https://cdn.neomoth.dev/r/GRrh41.png';
-				isAdmin = true;
-			}
-			else if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
-				message.className = "moderator";
-				badgeImage='https://cdn.neomoth.dev/r/v0yexJ.png';
-				// isAdmin = true;
-			}
-			else if(parsedInfo.twitch) {
+			if(parsedInfo.twitch) {
 				message.className='twitch';
 				nick.className = 'twitch';
 				badgeImage='https://cdn.neomoth.dev/r/iU6U6h.png';
