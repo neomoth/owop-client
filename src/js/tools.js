@@ -63,6 +63,8 @@ export function updateToolbar(win = toolsWindow) {
 		}
 	}
 	const outputNumber = (input) => input % 6 === 0 ? 40 * (input / 6) : undefined;
+	console.log(toolsWindow.container.children.length);
+	console.log(outputNumber(toolsWindow.container.children.length));
 	toolsWindow.container.style.cssText=`max-width:${outputNumber(toolsWindow.container.children.length)}`
 }
 
