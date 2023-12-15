@@ -150,7 +150,7 @@ function receiveMessage(text) {
 	var message = document.createElement("li");
 	let parsedJson = JSON.parse(text);
 	let parsedText = parsedJson.string;
-	let parsedInfo = parsedJson.accountInfo;
+	let parsedInfo = parsedJson.clientInfo;
 	console.log(parsedText);
 	var realText = parsedText;
 	var isAdmin = false;
