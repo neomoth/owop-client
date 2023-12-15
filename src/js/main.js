@@ -246,7 +246,7 @@ function receiveMessage(text) {
 					for(let i = 0;i<badgeImages.length;i++) {
 						let badge = document.createElement("span");
 						badge.style.display='inline-flex';
-						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
+						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
 						message.appendChild(badge);
 					}
 				}
