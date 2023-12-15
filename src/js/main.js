@@ -188,6 +188,8 @@ function receiveMessage(text) {
 		let nick = document.createElement("span");
 		let badge = document.createElement("span");
 		let badgeImages = [];
+		message.style.display='flex';
+		badge.style.display='flex';
 		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
 			message.className = "admin";
 			badgeImages.push('https://cdn.neomoth.dev/r/GRrh41.png');
@@ -199,28 +201,26 @@ function receiveMessage(text) {
 			// isAdmin = true;
 		}
 		if (parsedInfo.isLoggedIn) {
-			message.style.display='flex';
-			badge.style.display='flex';
-			let nickname = parsedText.split(": ")[0];
-			nick.innerHTML = escapeHTML(nickname + ": ");
-			nick.addEventListener("click", function(event) {
-				createContextMenu(event.clientX, event.clientY, [
-					["Mute " + nickname, function() {
-						PublicAPI.muted.push(id);
-						receiveMessage("<span style=\"color: #ffa71f\">Muted " + id + "</span>");
-					}]
-				]);
-				event.stopPropagation();
-			});
 			if(parsedInfo.twitch) {
-				if(!isAdmin&&!isMod) {
+				if(!isAdmin||!isMod) {
 					message.className = 'twitch';
 					nick.className = 'twitch';
 				}
 				badgeImages.push('https://cdn.neomoth.dev/r/iU6U6h.png');
 			}
-			else {
-				if(!isAdmin&&!isMod) nick.className = 'userAccount';
+			if(!isAdmin||!isMod){
+				let nickname = parsedText.split(": ")[0];
+				nick.innerHTML = escapeHTML(nickname + ": ");
+				nick.addEventListener("click", function(event) {
+					createContextMenu(event.clientX, event.clientY, [
+						["Mute " + nickname, function() {
+							PublicAPI.muted.push(id);
+							receiveMessage("<span style=\"color: #ffa71f\">Muted " + id + "</span>");
+						}]
+					]);
+					event.stopPropagation();
+				});
+				nick.className = 'userAccount';
 			}
 			if(badgeImages){
 				for(let i = 0;i<badgeImages;i++) {
@@ -228,8 +228,10 @@ function receiveMessage(text) {
 					message.appendChild(badge);
 				}
 			}
-			message.appendChild(nick);
-			parsedText = parsedText.slice(nickname.length + 2);
+			if(!isAdmin||!isMod) {
+				message.appendChild(nick);
+				parsedText = parsedText.slice(nickname.length + 2);
+			}
 		}
 	} else {
 		var nick = document.createElement("span");
