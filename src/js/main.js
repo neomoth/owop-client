@@ -148,8 +148,9 @@ function receiveMessage(text) {
 	};
 
 	var message = document.createElement("li");
-	let parsedText = text.string;
-	let parsedInfo = text.accountInfo;
+	let parsedJson = JSON.parse(text);
+	let parsedText = parsedJson.string;
+	let parsedInfo = parsedJson.accountInfo;
 	var realText = parsedText;
 	var isAdmin = false;
 	// if (text.startsWith("[D]")) {
@@ -274,7 +275,8 @@ function receiveMessage(text) {
 }
 
 function receiveDevMessage(text) {
-	let parsedText = text.string;
+	let parsedJson = JSON.parse(text);
+	let parsedText = parsedJson.string;
     try {
         misc.devRecvReader(parsedText);
     } catch(e) {}
