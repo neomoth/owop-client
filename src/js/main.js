@@ -198,7 +198,7 @@ function receiveMessage(text) {
 		let hasColor;
 		let isOwner;
 		message.style.display='flex';
-		if(parsedInfo.world){
+		if(parsedInfo.world||parsedText.startsWith('​')){
 			message.className='admin';
 			isAdmin=true;
 		}else{
