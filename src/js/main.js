@@ -199,7 +199,7 @@ function receiveMessage(text) {
 		let isOwner;
 		message.style.display='flex';
 		if(parsedInfo.world||parsedText.startsWith('\u200b')){
-			message.style.display='';
+			message.style.display=null;
 			message.className='admin';
 			isAdmin=true;
 		}else{
