@@ -198,7 +198,7 @@ function receiveMessage(text) {
 		else if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
 			message.className = "moderator";
 			badgeImages.push('https://cdn.neomoth.dev/r/v0yexJ.png');
-			// isAdmin = true;
+			isMod = true;
 		}
 		if (parsedInfo.isLoggedIn) {
 			if(parsedInfo.twitch) {
@@ -209,6 +209,8 @@ function receiveMessage(text) {
 				badgeImages.push('https://cdn.neomoth.dev/r/iU6U6h.png');
 			}
 			if(!isAdmin||!isMod){
+				console.log(isAdmin)
+				console.log(isMod)
 				let nickname = parsedText.split(": ")[0];
 				nick.innerHTML = escapeHTML(nickname + ": ");
 				nick.addEventListener("click", function(event) {
