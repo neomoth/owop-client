@@ -28,6 +28,8 @@ export function updateToolWindow(name) {
 	}
 	elements.viewport.style.cursor = "url(" + tool.cursorblob + ") " + tool.offset[0] + " " + tool.offset[1] + ", pointer";
 	const outputNumber = (input) => input % 6 === 0 ? 40 * (input / 6) : undefined;
+	console.log(children.length);
+	console.log(outputNumber(children.length));
 	toolsWindow.container.style.cssText=`max-width:${outputNumber(children.length)}`
 }
 
