@@ -224,7 +224,7 @@ function receiveMessage(text) {
 			}
 			if(badgeImages){
 				for(let i = 0;i<badgeImages;i++) {
-					badge.innerHTML = `<img src='${badgeImages}' style='width:16px' alt='${nick.className}Badge'>`;
+					badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
 					message.appendChild(badge);
 				}
 			}
