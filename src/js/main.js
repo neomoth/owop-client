@@ -167,7 +167,7 @@ function receiveMessage(text) {
 	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname") || parsedText.startsWith("Your nickname") || parsedText.startsWith("User: ")) {
 		message.className = "server";
 		if (parsedText.startsWith("Nickname set to")) {
-			let newNick = parsedText.slice(17);
+			let newNick = parsedText.substring(18,parsedText.length-1);
 			if (newNick.length) {
 				misc.localStorage.nick = newNick;
 			}
