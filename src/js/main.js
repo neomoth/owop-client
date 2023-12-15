@@ -199,7 +199,7 @@ function receiveMessage(text) {
 		let isOwner;
 		message.style.display='flex';
 		if(parsedInfo.world||parsedText.startsWith('​')){
-			message.style.display='block';
+			message.style.display=null;
 			message.className='admin';
 			isAdmin=true;
 		}else{
