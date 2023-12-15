@@ -27,6 +27,8 @@ export function updateToolWindow(name) {
 		button.children[0].style.backgroundImage = "url(" + (isSelected ? cursors.slotset : cursors.set.src) + ")";
 	}
 	elements.viewport.style.cursor = "url(" + tool.cursorblob + ") " + tool.offset[0] + " " + tool.offset[1] + ", pointer";
+	const outputNumber = (input) => input % 6 === 0 ? 40 * (input / 6) : undefined;
+	toolsWindow.container.style.cssText=`max-width:${outputNumber(children.length)}`
 }
 
 export function updateToolbar(win = toolsWindow) {
@@ -1556,8 +1558,8 @@ eventSys.once(e.misc.toolsRendered, () => {
 eventSys.once(e.init, () => {
 	toolsWindow = new GUIWindow('Tools', {}, wdow => {
 		wdow.container.id = "toole-container";
-		// wdow.container.style.cssText = "max-width: 40px";
-		wdow.container.style.cssText='display:flex;flex-direction:column;flex-wrap:wrap;'
+		wdow.container.style.cssText = "max-width: 40px";
+		// wdow.container.style.cssText='display:flex;flex-direction:column;flex-wrap:wrap;'
 	}).move(5, 32);
 });
 
