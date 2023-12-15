@@ -1556,7 +1556,8 @@ eventSys.once(e.misc.toolsRendered, () => {
 eventSys.once(e.init, () => {
 	toolsWindow = new GUIWindow('Tools', {}, wdow => {
 		wdow.container.id = "toole-container";
-		wdow.container.style.cssText = "max-width: 40px";
+		// wdow.container.style.cssText = "max-width: 40px";
+		wdow.container.style.cssText='display:flex;flex-direction:column;flex-wrap:wrap;'
 	}).move(5, 32);
 });
 
