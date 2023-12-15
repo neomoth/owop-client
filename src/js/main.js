@@ -198,7 +198,7 @@ function receiveMessage(text) {
 		let hasColor;
 		let isOwner;
 		message.style.display='flex';
-		if(parsedInfo.world||parsedText.startsWith('​')){
+		if(parsedInfo.world||parsedText.startsWith('\u200b')){
 			message.style.display='';
 			message.className='admin';
 			isAdmin=true;
