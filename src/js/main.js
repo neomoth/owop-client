@@ -221,16 +221,22 @@ function receiveMessage(text) {
 					event.stopPropagation();
 				});
 				nick.className = 'userAccount';
-			}
-			if(badgeImages){
-				for(let i = 0;i<badgeImages;i++) {
-					badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
-					message.appendChild(badge);
+				if(badgeImages){
+					for(let i = 0;i<badgeImages;i++) {
+						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
+						message.appendChild(badge);
+					}
 				}
-			}
-			if(!isAdmin||!isMod) {
 				message.appendChild(nick);
 				parsedText = parsedText.slice(nickname.length + 2);
+			}
+			else{
+				if(badgeImages){
+					for(let i = 0;i<badgeImages;i++) {
+						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
+						message.appendChild(badge);
+					}
+				}
 			}
 		}
 	} else {
