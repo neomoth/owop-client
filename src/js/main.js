@@ -186,7 +186,7 @@ function receiveMessage(text) {
 	} else if (parsedText.startsWith("(M)")) {
 		message.className = "moderator";
 	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
-		if(parsedInfo.administrator||parsedInfo.world) {
+		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
 			message.className = "admin";
 			isAdmin = true;
 		}
