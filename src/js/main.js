@@ -188,22 +188,29 @@ function receiveMessage(text) {
 		let nick = document.createElement("span");
 		let badgeImages = [];
 		let hasColor;
-		message.style.display='inline-flex';
+		let isOwner;
+		message.style.display='flex';
+		if(parsedInfo.owner||parsedText.startsWith('(O)')) {
+			message.className = "owner";
+			badgeImages.push('https://cdn.neomoth.dev/r/juMgZu.png');
+			isOwner = true;
+			hasColor=true;
+		}
 		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
-			message.className = "admin";
-			badgeImages.push('https://cdn.neomoth.dev/r/GRrh41.png');
+			if(!hasColor) message.className = "admin";
+			badgeImages.push('https://cdn.neomoth.dev/r/Zpnbga.png');
 			isAdmin = true;
 			hasColor=true;
 		}
 		if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
-			if(!isAdmin)message.className = "moderator";
+			if(!hasColor)message.className = "moderator";
 			badgeImages.push('https://cdn.neomoth.dev/r/v0yexJ.png');
 			isMod = true;
 			hasColor=true;
 		}
 		if (parsedInfo.isLoggedIn) {
 			if(parsedInfo.twitch) {
-				if(!isAdmin||!isMod) {
+				if(!hasColor) {
 					message.className = 'twitch';
 					nick.className = 'twitch';
 					hasColor=true;
@@ -238,7 +245,7 @@ function receiveMessage(text) {
 				if(badgeImages){
 					for(let i = 0;i<badgeImages.length;i++) {
 						let badge = document.createElement("span");
-						badge.style.display='flex';
+						badge.style.display='inline-flex';
 						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
 						message.appendChild(badge);
 					}
