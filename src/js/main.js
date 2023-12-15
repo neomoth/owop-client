@@ -164,8 +164,16 @@ function receiveMessage(text) {
 	// 	message.appendChild(nick);
 	// 	text = text.slice(nickname.length);
 	// } else
-	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname set to") || parsedText.startsWith("User: ")) {
+	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname") || parsedText.startsWith("User: ")) {
 		message.className = "server";
+		if (parsedText.startsWith("Nickname set to")) {
+			let newNick = parsedText.slice(17);
+			if (newNick.length) {
+				misc.localStorage.nick = newNick;
+			}
+		} else if(parsedText==='Nickname reset.') {
+			delete misc.localStorage.nick;
+		}
 	} else if (parsedText.startsWith("->")) {
 		var cuttxt = parsedText.slice(3);
 		var id = parseInt(cuttxt);
@@ -190,66 +198,71 @@ function receiveMessage(text) {
 		let hasColor;
 		let isOwner;
 		message.style.display='flex';
-		if(parsedInfo.owner||parsedText.startsWith('(O)')) {
-			message.className = "owner";
-			badgeImages.push('https://cdn.neomoth.dev/r/juMgZu.png');
-			isOwner = true;
-			hasColor=true;
-		}
-		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
-			if(!hasColor) message.className = "admin";
-			badgeImages.push('https://cdn.neomoth.dev/r/Zpnbga.png');
-			isAdmin = true;
-			hasColor=true;
-		}
-		if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
-			if(!hasColor)message.className = "moderator";
-			badgeImages.push('https://cdn.neomoth.dev/r/v0yexJ.png');
-			isMod = true;
-			hasColor=true;
-		}
-		if (parsedInfo.isLoggedIn) {
-			if(parsedInfo.twitch) {
-				if(!hasColor) {
-					message.className = 'twitch';
-					nick.className = 'twitch';
-					hasColor=true;
-				}
-				badgeImages.push('https://cdn.neomoth.dev/r/iU6U6h.png');
+		if(parsedInfo.world){
+			message.className='admin';
+			isAdmin=true;
+		}else{
+			if(parsedInfo.owner||parsedText.startsWith('(O)')) {
+				message.className = "owner";
+				badgeImages.push('https://cdn.neomoth.dev/r/juMgZu.png');
+				isOwner = true;
+				hasColor=true;
 			}
-			if(!isAdmin&&!isMod){
-				console.log(isAdmin)
-				console.log(isMod)
-				let nickname = parsedText.split(": ")[0];
-				nick.innerHTML = escapeHTML(nickname + ": ");
-				nick.addEventListener("click", function(event) {
-					createContextMenu(event.clientX, event.clientY, [
-						["Mute " + nickname, function() {
-							PublicAPI.muted.push(id);
-							receiveMessage("<span style=\"color: #ffa71f\">Muted " + id + "</span>");
-						}]
-					]);
-					event.stopPropagation();
-				});
-				if(!hasColor) nick.className = 'userAccount';
-				if(badgeImages){
-					for(let i = 0;i<badgeImages.length;i++) {
-						let badge = document.createElement("span");
-						badge.style.display='inline-flex';
-						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
-						message.appendChild(badge);
+			if(parsedInfo.administrator||parsedText.startsWith('(A)')) {
+				if(!hasColor) message.className = "admin";
+				badgeImages.push('https://cdn.neomoth.dev/r/Zpnbga.png');
+				isAdmin = true;
+				hasColor=true;
+			}
+			if(parsedInfo.moderator||parsedText.startsWith('(M)')) {
+				if(!hasColor)message.className = "moderator";
+				badgeImages.push('https://cdn.neomoth.dev/r/v0yexJ.png');
+				isMod = true;
+				hasColor=true;
+			}
+			if (parsedInfo.isLoggedIn) {
+				if(parsedInfo.twitch) {
+					if(!hasColor) {
+						message.className = 'twitch';
+						nick.className = 'twitch';
+						hasColor=true;
 					}
+					badgeImages.push('https://cdn.neomoth.dev/r/iU6U6h.png');
 				}
-				message.appendChild(nick);
-				parsedText = parsedText.slice(nickname.length + 2);
-			}
-			else{
-				if(badgeImages){
-					for(let i = 0;i<badgeImages.length;i++) {
-						let badge = document.createElement("span");
-						badge.style.display='inline-flex';
-						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
-						message.appendChild(badge);
+				if(!isAdmin&&!isMod){
+					console.log(isAdmin)
+					console.log(isMod)
+					let nickname = parsedText.split(": ")[0];
+					nick.innerHTML = escapeHTML(nickname + ": ");
+					nick.addEventListener("click", function(event) {
+						createContextMenu(event.clientX, event.clientY, [
+							["Mute " + nickname, function() {
+								PublicAPI.muted.push(id);
+								receiveMessage("<span style=\"color: #ffa71f\">Muted " + id + "</span>");
+							}]
+						]);
+						event.stopPropagation();
+					});
+					if(!hasColor) nick.className = 'userAccount';
+					if(badgeImages){
+						for(let i = 0;i<badgeImages.length;i++) {
+							let badge = document.createElement("span");
+							badge.style.display='inline-flex';
+							badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
+							message.appendChild(badge);
+						}
+					}
+					message.appendChild(nick);
+					parsedText = parsedText.slice(nickname.length + 2);
+				}
+				else{
+					if(badgeImages){
+						for(let i = 0;i<badgeImages.length;i++) {
+							let badge = document.createElement("span");
+							badge.style.display='inline-flex';
+							badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
+							message.appendChild(badge);
+						}
 					}
 				}
 			}
