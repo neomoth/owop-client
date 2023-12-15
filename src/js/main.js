@@ -149,19 +149,22 @@ function receiveMessage(text) {
 
 	var message = document.createElement("li");
 	var realText = text;
+	let parsedText = text.string;
+	let parsedInfo = text.accountInfo;
 	var isAdmin = false;
-	if (text.startsWith("[D]")) {
-		message.className = "discord";
-		var nick = document.createElement("span");
-		nick.className = "nick";
-		var nickname = text.split(": ")[0] + ": ";
-		nick.innerHTML = escapeHTML(nickname);
-		message.appendChild(nick);
-		text = text.slice(nickname.length);
-	} else if (text.startsWith("[Server]") || text.startsWith("Server:") || text.startsWith("Nickname set to") || text.startsWith("User: ")) {
+	// if (text.startsWith("[D]")) {
+	// 	message.className = "discord";
+	// 	var nick = document.createElement("span");
+	// 	nick.className = "nick";
+	// 	var nickname = text.split(": ")[0] + ": ";
+	// 	nick.innerHTML = escapeHTML(nickname);
+	// 	message.appendChild(nick);
+	// 	text = text.slice(nickname.length);
+	// } else
+	if (parsedText.startsWith("[Server]") || parsedText.startsWith("Server:") || parsedText.startsWith("Nickname set to") || parsedText.startsWith("User: ")) {
 		message.className = "server";
-	} else if (text.startsWith("->")) {
-		var cuttxt = text.slice(3);
+	} else if (parsedText.startsWith("->")) {
+		var cuttxt = parsedText.slice(3);
 		var id = parseInt(cuttxt);
 		cuttxt = cuttxt.slice(id.toString().length);
 		if (cuttxt.startsWith(" tells you: ")) {
@@ -174,13 +177,13 @@ function receiveMessage(text) {
 			nick.innerHTML = escapeHTML(`-> ${id} tells you: `);
 			addContext(nick, id, id);
 			message.appendChild(nick);
-			text = cuttxt.slice(12);
+			parsedText = cuttxt.slice(12);
 		} else {
 			message.className = "tell";
 		}
-	} else if (text.startsWith("(M)")) {
+	} else if (parsedText.startsWith("(M)")) {
 		message.className = "moderator";
-	} else if (isNaN(text.split(": ")[0]) && text.split(": ")[0].charAt(0) != "[") {
+	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
 		message.className = "admin";
 		isAdmin = true;
 	} else {
@@ -211,13 +214,13 @@ function receiveMessage(text) {
 			event.stopPropagation();
 		});
 		message.appendChild(nick);
-		if(!loggedin)text = text.slice(nickname.length + 2);
-		else text = text.slice(nickname.length+6);
+		if(!loggedin)parsedText = parsedText.slice(nickname.length + 2);
+		else parsedText = parsedText.slice(nickname.length+6);
 	}
-	var idIndex = text.indexOf(': '); /* This shouldn't be like this, change on proto switch */
+	var idIndex = parsedText.indexOf(': '); /* This shouldn't be like this, change on proto switch */
 	if (idIndex !== -1) {
-		var ntext = text.substr(0, idIndex);
-		realText = ntext.replace(/\d+/g, '') + text.slice(idIndex + 2);
+		var ntext = parsedText.substr(0, idIndex);
+		realText = ntext.replace(/\d+/g, '') + parsedText.slice(idIndex + 2);
 	}
 
 	if (misc.lastMessage && misc.lastMessage.text === realText) {
@@ -228,7 +231,7 @@ function receiveMessage(text) {
 			get text() { return realText; },
 			incCount: () => {
 				var times = span.recvTimes || 1;
-				span.innerHTML = `${anchorme(text, {
+				span.innerHTML = `${anchorme(parsedText, {
 					attributes: [
 						{
 							name: "target",
@@ -243,15 +246,15 @@ function receiveMessage(text) {
 			}
 		};
 		if (!isAdmin) {
-			text = escapeHTML(text).replace(/\&\#x2F;/g, "/");
+			parsedText = escapeHTML(parsedText).replace(/\&\#x2F;/g, "/");
 		}
 		var textByNls = text.split('\n');
 		var firstNl = textByNls.shift();
 		firstNl = firstNl.replace(/(?:&lt;|<)a:(.+?):([0-9]{8,32})(?:&gt;|>)/g, '<img class="emote" src="https://cdn.discordapp.com/emojis/$2.gif?v=1">'); // animated
 		firstNl = firstNl.replace(/(?:&lt;|<):(.+?):([0-9]{8,32})(?:&gt;|>)/g,  '<img class="emote" src="https://cdn.discordapp.com/emojis/$2.png?v=1">'); // static
-		text = firstNl + '\n' + textByNls.join('\n');
-		text = misc.chatPostFormatRecvModifier(text);
-		span.innerHTML = anchorme(text, {
+		parsedText = firstNl + '\n' + textByNls.join('\n');
+		parsedText = misc.chatPostFormatRecvModifier(parsedText);
+		span.innerHTML = anchorme(parsedText, {
 			attributes: [
 				{
 					name: "target",
@@ -271,12 +274,13 @@ function receiveMessage(text) {
 }
 
 function receiveDevMessage(text) {
+	let parsedText = text.string;
     try {
-        misc.devRecvReader(text);
+        misc.devRecvReader(parsedText);
     } catch(e) {}
 	var message = document.createElement("li");
 	var span = document.createElement("span");
-	span.innerHTML = text;
+	span.innerHTML = parsedText;
 	message.appendChild(span);
 	elements.devChatMessages.appendChild(message);
 	elements.devChatMessages.scrollTop = elements.devChatMessages.scrollHeight;
@@ -629,14 +633,17 @@ function init() {
 							misc.localStorage.adminlogin = text.slice(12);
 						} else if (text.startsWith("/modlogin ")) {
 							misc.localStorage.modlogin = text.slice(10);
-						} else if (text.startsWith("/nick")) {
-							var nick = text.slice(6);
-							if (nick.length) {
-								misc.localStorage.nick = nick;
-							} else {
-								delete misc.localStorage.nick;
-							}
-						} else if (text.startsWith("/pass ") && misc.world) {
+						}
+						// dont auto store
+						// else if (text.startsWith("/nick")) {
+						// 	var nick = text.slice(6);
+						// 	if (nick.length) {
+						// 		misc.localStorage.nick = nick;
+						// 	} else {
+						// 		delete misc.localStorage.nick;
+						// 	}
+						// }
+						else if (text.startsWith("/pass ") && misc.world) {
 							var pass = text.slice(6);
 							misc.worldPasswords[net.protocol.worldName] = pass;
 							saveWorldPasswords();
