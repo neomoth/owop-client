@@ -234,7 +234,9 @@ function receiveMessage(text) {
 				if(!hasColor) nick.className = 'userAccount';
 				if(badgeImages){
 					for(let i = 0;i<badgeImages.length;i++) {
-						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
+						let badge = document.createElement("span");
+						badge.style.display='inline-flex';
+						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
 						message.appendChild(badge);
 					}
 				}
