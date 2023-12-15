@@ -151,6 +151,7 @@ function receiveMessage(text) {
 	let parsedJson = JSON.parse(text);
 	let parsedText = parsedJson.string;
 	let parsedInfo = parsedJson.accountInfo;
+	console.log(parsedText);
 	var realText = parsedText;
 	var isAdmin = false;
 	// if (text.startsWith("[D]")) {
