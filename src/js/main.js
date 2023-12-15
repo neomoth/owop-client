@@ -186,11 +186,9 @@ function receiveMessage(text) {
 		}
 	} else if (isNaN(parsedText.split(": ")[0]) && parsedText.split(": ")[0].charAt(0) != "[") {
 		let nick = document.createElement("span");
-		let badge = document.createElement("span");
 		let badgeImages = [];
 		let hasColor;
 		message.style.display='inline-flex';
-		badge.style.display='flex';
 		if(parsedInfo.administrator||parsedInfo.world||parsedText.startsWith('(A)')) {
 			message.className = "admin";
 			badgeImages.push('https://cdn.neomoth.dev/r/GRrh41.png');
@@ -239,6 +237,8 @@ function receiveMessage(text) {
 			else{
 				if(badgeImages){
 					for(let i = 0;i<badgeImages.length;i++) {
+						let badge = document.createElement("span");
+						badge.style.display='flex';
 						badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px' alt='${nick.className}Badge'>`;
 						message.appendChild(badge);
 					}
