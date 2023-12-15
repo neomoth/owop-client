@@ -27,10 +27,6 @@ export function updateToolWindow(name) {
 		button.children[0].style.backgroundImage = "url(" + (isSelected ? cursors.slotset : cursors.set.src) + ")";
 	}
 	elements.viewport.style.cursor = "url(" + tool.cursorblob + ") " + tool.offset[0] + " " + tool.offset[1] + ", pointer";
-	const outputNumber = (input) => input % 6 === 0 ? 40 * (input / 6) : undefined;
-	console.log(children.length);
-	console.log(outputNumber(children.length));
-	toolsWindow.container.style.cssText=`max-width:${outputNumber(children.length)}`
 }
 
 export function updateToolbar(win = toolsWindow) {
@@ -66,6 +62,8 @@ export function updateToolbar(win = toolsWindow) {
 			container.appendChild(element);
 		}
 	}
+	const outputNumber = (input) => input % 6 === 0 ? 40 * (input / 6) : undefined;
+	toolsWindow.container.style.cssText=`max-width:${outputNumber(toolsWindow.container.children.length)}`
 }
 
 export function showToolsWindow(bool) {
