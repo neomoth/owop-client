@@ -205,7 +205,7 @@ function receiveMessage(text) {
 			});
 			message.appendChild(nick);
 			parsedText = parsedText.slice(nickname.length + 2);
-			message.className = 'userAccount';
+			nick.className = 'userAccount';
 		}
 	} else {
 		var nick = document.createElement("span");
