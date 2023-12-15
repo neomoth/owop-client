@@ -191,7 +191,7 @@ function receiveMessage(text) {
 	} else {
 		var nick = document.createElement("span");
 		nick.className = "nick";
-		var nickname = text.split(": ")[0];
+		var nickname = parsedText.split(": ")[0];
 		var id = nickname.startsWith("[") ? nickname.split(" ")[0].slice(1, -1) : nickname;
 		let loggedin = false;
 		id = parseInt(id);
@@ -250,7 +250,7 @@ function receiveMessage(text) {
 		if (!isAdmin) {
 			parsedText = escapeHTML(parsedText).replace(/\&\#x2F;/g, "/");
 		}
-		var textByNls = text.split('\n');
+		var textByNls = parsedText.split('\n');
 		var firstNl = textByNls.shift();
 		firstNl = firstNl.replace(/(?:&lt;|<)a:(.+?):([0-9]{8,32})(?:&gt;|>)/g, '<img class="emote" src="https://cdn.discordapp.com/emojis/$2.gif?v=1">'); // animated
 		firstNl = firstNl.replace(/(?:&lt;|<):(.+?):([0-9]{8,32})(?:&gt;|>)/g,  '<img class="emote" src="https://cdn.discordapp.com/emojis/$2.png?v=1">'); // static
