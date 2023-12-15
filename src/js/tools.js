@@ -714,14 +714,14 @@ eventSys.once(e.misc.toolsRendered, () => {
 		});
 	}));
 
-	addTool(new Tool("WarpAll", cursors.warpall, PLAYERFX.NONE, RANK.ADMIN, (tool)=>{
-		tool.setEvent('onmousedown', (mouse)=>{
-			if (!(mouse.buttons & 0b100)) {
-				eventSys.emit(e.net.chat, JSON.stringify({string:`Balls.`}));
-				net.protocol.sendMessage('/help');
-			}
-		})
-	}))
+	// addTool(new Tool("WarpAll", cursors.warpall, PLAYERFX.NONE, RANK.ADMIN, (tool)=>{
+	// 	tool.setEvent('onmousedown', (mouse)=>{
+	// 		if (!(mouse.buttons & 0b100)) {
+	// 			eventSys.emit(e.net.chat, JSON.stringify({string:`Balls.`}));
+	// 			net.protocol.sendMessage('/help');
+	// 		}
+	// 	})
+	// }))
 
 	// addTool(new Tool("Circle", cursors.circle, PLAYERFX.NONE, RANK.USER, function(tool) {
 	// 	let start = null;
