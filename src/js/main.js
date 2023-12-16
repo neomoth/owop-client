@@ -231,11 +231,13 @@ function receiveMessage(text) {
 					badgeImages.push('https://cdn.neomoth.dev/r/iU6U6h.png');
 				}
 				if(!isAdmin&&!isMod){
-					console.log(isAdmin)
-					console.log(isMod)
 					let nickname = parsedText.split(": ")[0];
 					nick.innerHTML = escapeHTML(nickname + ": ");
 					nick.addEventListener("click", function(event) {
+						// windowSys.addWindow(new GUIWindow('User Profile',{closeable:true,immobile:false,centerOnce:false},(w)=>{
+						// 	w.container.style.cssText="width:420px;height:80px;"
+						// 	w.innerHTML=`<div style="padding:4px;display:flex;"><div style="display:inline-flex"></div></div>`
+						// })).move(screen.availWidth-890,screen.availHeight-220);
 						createContextMenu(event.clientX, event.clientY, [
 							["Mute " + nickname, function() {
 								PublicAPI.muted.push(id);
