@@ -52,7 +52,10 @@ export const OldProtocol = {
 		7: 'export',
 		8: 'line',
 		9: 'protect',
-		10: 'copy'
+		10: 'copy',
+		11: 'areaprotect',
+		12: 'circle',
+		13: 'warpall'
 	},
 	misc: {
 		worldVerification: 25565,
