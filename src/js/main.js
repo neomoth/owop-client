@@ -1261,7 +1261,8 @@ window.addEventListener("message",(messageEvent)=>{
 		console.log('no');
 		return;
 	}
-	window.localStorage.setItem('nmdev-token', messageEvent.data.token);
+	if(messageEvent.data==='loggedin') window.location.reload();
+	else console.log('brap');
 });
 
 window.addEventListener("load", () => {
