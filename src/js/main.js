@@ -1257,7 +1257,7 @@ window.addEventListener("error", e => {
 });
 
 window.addEventListener("message",(messageEvent)=>{
-	if(messageEvent.origin!=='https://neomoth.dev/login'&&messageEvent.origin!=='https://neomoth.dev/register'){
+	if(messageEvent.origin!=='https://neomoth.dev'){
 		console.log(messageEvent.origin);
 		return;
 	}
