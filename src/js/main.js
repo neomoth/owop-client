@@ -222,6 +222,9 @@ function receiveMessage(text) {
 				hasColor=true;
 			}
 			if (parsedInfo.isLoggedIn) {
+				if(parsedInfo.wood){
+					badgeImages.push('https://cdn.neomoth.dev/r/oSogqB.png');
+				}
 				if(parsedInfo.twitch) {
 					if(!hasColor) {
 						message.className = 'twitch';
