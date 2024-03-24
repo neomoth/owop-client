@@ -197,7 +197,7 @@ function receiveMessage(text) {
 		let badgeImages = [];
 		let hasColor;
 		let isOwner;
-		message.style.display='flex';
+		message.style.display='block';
 		if(parsedInfo.world||parsedText.startsWith('\u200b')){
 			message.style.display=null;
 			message.className='admin';
@@ -253,7 +253,8 @@ function receiveMessage(text) {
 					if(badgeImages){
 						for(let i = 0;i<badgeImages.length;i++) {
 							let badge = document.createElement("span");
-							badge.style.display='inline-flex';
+							badge.style.display='inline-block';
+							badge.style.height='16px';
 							badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
 							message.appendChild(badge);
 						}
@@ -265,7 +266,8 @@ function receiveMessage(text) {
 					if(badgeImages){
 						for(let i = 0;i<badgeImages.length;i++) {
 							let badge = document.createElement("span");
-							badge.style.display='inline-flex';
+							badge.style.display='inline-block';
+							badge.style.height='16px';
 							badge.innerHTML = `<img src='${badgeImages[i]}' style='width:16px;height:16px' alt='${nick.className}Badge'>`;
 							message.appendChild(badge);
 						}
@@ -631,7 +633,7 @@ export function retryingConnect(serverGetter, worldName, token) {
 		net.connect(currentServer, worldName, token);
 		const disconnected = () => {
 			++tryN;
-			statusMsg(true, `Couldn't connect to server${tryN >= 5 ? ". Your IP may have been flagged as a proxy (or banned). Proxies are disallowed on OWOP due to bot abuse, sorry. R" : ", r"}etrying... (${tryN})`);
+			statusMsg(true, `Couldn't connect to server${tryN >= 5 ? ". Your IP may have been flagged as a proxy (or banned). Proxies are disallowed on OWOP due to bot abuse, sorry.\nAlternatively, the server may simply be down. You're free to contact me on Discord (neomoth.dev) to report the issue. R" : ", r"}etrying... (${tryN}).`);
 			setTimeout(tryConnect, Math.min(tryN * 2000, 10000), tryN);
 			eventSys.removeListener(e.net.connected, connected);
 		};
