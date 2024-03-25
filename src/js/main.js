@@ -235,6 +235,7 @@ function receiveMessage(text) {
 				}
 				if(!isAdmin&&!isMod){
 					let nickname = parsedText.split(": ")[0];
+					console.log(nickname);
 					if(nick.className==='twitch')if(nickname==='Weest:'){nick.className='weest';message.className='weest';}
 					nick.innerHTML = escapeHTML(nickname + ": ");
 					nick.addEventListener("click", function(event) {
