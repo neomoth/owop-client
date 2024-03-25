@@ -498,10 +498,16 @@ button:focus {
 	color: #86ff41;
 }
 #chat-messages > li>.twitch{
-	color: #a970ff;
+	color: #d230ff;
 }
 #chat-messages > li.twitch{
-	color: #a970ff;
+	color: #f460ff;
+}
+#chat-messages > li>.weest{
+	color: #e7b200;
+}
+#chat-messages > li.weest{
+	color:#ff0;
 }
 #chat-messages > li > .userAccount{
 	color: #2c994d;
